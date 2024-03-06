@@ -1,3 +1,4 @@
+// TODO: fix type
 export type Vacancy = {
   id: number;
   premium: boolean;
@@ -6,6 +7,8 @@ export type Vacancy = {
   has_test: boolean;
   response_letter_required: boolean;
 };
+
+// TODO: method should accept page number, at the moment only first page is returned
 
 export default defineEventHandler(async (event) => {
   const res: Vacancy[] = await $fetch(
