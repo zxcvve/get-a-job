@@ -17,6 +17,6 @@ async function fetchAllVacancies() {
   return vacancies;
 }
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   return fetchAllVacancies();
 });
