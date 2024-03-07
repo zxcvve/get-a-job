@@ -2,4 +2,5 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/eslint-module", "@nuxt/ui", "@nuxtjs/supabase"],
+  eslint: { lintOnStart: false },
 });
