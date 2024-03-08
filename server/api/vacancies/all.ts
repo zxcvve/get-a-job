@@ -1,7 +1,7 @@
 import { fetchVacancies } from "~/server/api/vacancies";
 import { Vacancy } from "~/types/jobs";
 
-async function fetchAllVacancies() {
+export async function fetchAllVacancies() {
   const res = await fetchVacancies();
   const pagesTotal = res.pages;
 
