@@ -5,6 +5,7 @@ export type Vacancy = {
   premium: boolean;
   salary?: Salary;
   schedule: Schedule;
+  alternate_url: string;
 };
 
 export type Salary = {
