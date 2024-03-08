@@ -14,7 +14,7 @@ async function addHHVacanciesToDB(event) {
     const insertData = {
       name: vacancy.name,
       url: vacancy.alternate_url,
-      salary: salaryString,
+      salary: vacancy.salary,
       employer: vacancy.employer.name,
       service: 1,
     };
