@@ -23,6 +23,7 @@
     "@nuxtjs/supabase": "^1.1.6",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "nuxt-scheduler": "^0.1.9",
     "prettier": "3.2.5"
   }
 }
