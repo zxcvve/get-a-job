@@ -4,4 +4,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/eslint-module", "@nuxt/ui", "@nuxtjs/supabase"],
   eslint: { lintOnStart: false },
   colorMode: { preference: "light" },
+  supabase: {
+    redirect: false,
+  },
 });
