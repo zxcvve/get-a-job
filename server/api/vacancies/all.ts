@@ -1,5 +1,5 @@
 import { fetchVacancies } from "~/server/api/vacancies";
-import { Vacancy } from "~/types";
+import { Vacancy } from "~/types/jobs";
 
 async function fetchAllVacancies() {
   const res = await fetchVacancies();
