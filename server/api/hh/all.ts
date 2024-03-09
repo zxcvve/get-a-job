@@ -1,4 +1,4 @@
-import { fetchVacancies } from "~/server/api/vacancies";
+import { fetchVacancies } from "~/server/api/hh/vacancies";
 import { Vacancy } from "~/types/jobs";
 
 export async function fetchAllVacancies() {

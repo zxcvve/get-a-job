@@ -1,5 +1,5 @@
 // import { serverSupabaseClient } from "#supabase/server";
-import { fetchAllVacancies } from "~/server/api/vacancies/all";
+import { fetchAllVacancies } from "~/server/api/hh/all";
 import { serverSupabaseClient } from "#supabase/server";
 
 async function addHHVacanciesToDB(event) {
