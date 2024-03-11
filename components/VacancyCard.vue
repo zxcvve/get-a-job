@@ -5,7 +5,8 @@ const props = defineProps<{ vacancy: Vacancy }>();
 </script>
 
 <template>
-  <NuxtLink :to="props.vacancy.alternate_url">
+  <!--  TODO: fix db schema so it represents actual types-->
+  <NuxtLink :to="props.vacancy.url">
     <UCard>
       <template #header>
         <!--      <Placeholder class="h-8" />-->
