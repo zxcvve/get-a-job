@@ -5,11 +5,9 @@ const vacancies = await $fetch("/api/supabase/vacancies");
 
 <template>
   <!--TODO: fix styling, use nuxtui Container and Skeleton maybe?-->
-  <div class="m-7">
-    <div class="max-w-screen-lg m-auto space-y-1.5">
-      <div v-for="vacancy in vacancies" :key="vacancy.id">
-        <VacancyCard :vacancy="vacancy" />
-      </div>
+  <UContainer :ui="{ constrained: 'max-w-2xl' }">
+    <div v-for="vacancy in vacancies" :key="vacancy.id" class="m-1">
+      <VacancyCard :vacancy="vacancy" />
     </div>
-  </div>
+  </UContainer>
 </template>
