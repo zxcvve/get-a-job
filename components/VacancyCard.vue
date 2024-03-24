@@ -2,12 +2,13 @@
 import type { Vacancy } from "~/types/jobs";
 
 const props = defineProps<{ vacancy: Vacancy }>();
+import { NCard } from "naive-ui";
 </script>
 
 <template>
   <!--  TODO: fix db schema so it represents actual types-->
   <NuxtLink :to="props.vacancy.url">
-    <UCard>
+    <NCard>
       <template #header>
         <!--      <Placeholder class="h-8" />-->
         <p>{{ props.vacancy.name }}</p>
@@ -15,7 +16,7 @@ const props = defineProps<{ vacancy: Vacancy }>();
 
       <!--    <Placeholder class="h-32" />-->
 
-      <template v-if="props.vacancy.salary" #footer>
+      <template v-if="props.vacancy.salary">
         <p>
           Зарплата от {{ props.vacancy.salary.from }}
           <span v-if="props.vacancy.salary.to"
@@ -24,6 +25,6 @@ const props = defineProps<{ vacancy: Vacancy }>();
           {{ props.vacancy.salary.currency }}
         </p>
       </template>
-    </UCard>
+    </NCard>
   </NuxtLink>
 </template>
