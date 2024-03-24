@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     "@nuxtjs/eslint-module",
-    "@nuxt/ui",
+    "@nuxtjs/tailwindcss",
     "@nuxtjs/supabase",
     "nuxt-scheduler",
   ],
