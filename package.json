@@ -17,10 +17,11 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@bg-dev/nuxt-naiveui": "^1.13.1",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/eslint-module": "^4.1.0",
-    "@nuxtjs/tailwindcss": "^6.11.4",
     "@nuxtjs/supabase": "^1.1.6",
+    "@nuxtjs/tailwindcss": "^6.11.4",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "nuxt-scheduler": "^0.1.9",

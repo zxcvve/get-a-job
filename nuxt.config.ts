@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/supabase",
     "nuxt-scheduler",
+    "@bg-dev/nuxt-naiveui",
   ],
   eslint: { lintOnStart: false },
   colorMode: { preference: "light" },
