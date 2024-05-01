@@ -6,6 +6,7 @@ export type Vacancy = {
   salary?: Salary;
   schedule: Schedule;
   alternate_url: string;
+  url: string;
 };
 
 export type Salary = {
