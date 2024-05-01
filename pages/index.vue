@@ -1,5 +1,7 @@
 <script setup>
 // const vacancies = await $fetch("/api/vacancies/all");
+import VacancyFilter from "~/components/VacancyFilter.vue";
+
 const vacancies = await $fetch("/api/supabase/vacancies");
 import { NFlex } from "naive-ui";
 </script>
@@ -9,6 +11,7 @@ import { NFlex } from "naive-ui";
     <!--TODO: fix styling, use nuxtui Container and Skeleton maybe?-->
     <div class="flex justify-center">
       <NFlex vertical class="max-w-screen-md">
+        <VacancyFilter />
         <div v-for="vacancy in vacancies" :key="vacancy.id" class="m-1">
           <VacancyCard :vacancy="vacancy" />
         </div>
