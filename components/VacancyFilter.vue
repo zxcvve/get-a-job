@@ -19,17 +19,34 @@ const scheduleOptions = [
   { id: "remote", name: "Удалённая работа" },
   {
     id: "fullDay",
-    name: "Полный день ",
+    name: "Полный день",
   },
   {
     id: "flexible",
     name: "Гибкий график",
   },
 ];
+
+const vacancyFilter = defineModel({
+  default: {
+    selectedSalary: undefined,
+    selectedSchedule: undefined,
+  },
+});
+
+const emit = defineEmits(["filterClicked", "resetClicked"]);
+const handleFilter = () => {
+  emit("filterClicked", vacancyFilter);
+};
+// TODO: разобраться, как сбрасывать состояние радио кнопок
+const resetClicked = () => {
+  // vacancyFilter.value.selectedSalary = undefined;
+  emit("resetClicked", vacancyFilter);
+};
 </script>
 <template>
   <NSpace vertical>
-    <NRadioGroup v-model:value="value">
+    <NRadioGroup v-model:value="vacancyFilter.selectedSalary">
       <NSpace vertical>
         <p class="font-bold">Уровень дохода</p>
         <NRadio
@@ -40,7 +57,7 @@ const scheduleOptions = [
         ></NRadio>
       </NSpace>
     </NRadioGroup>
-    <NCheckboxGroup v-model:value="id">
+    <NCheckboxGroup v-model:value="vacancyFilter.selectedSchedule">
       <NSpace vertical>
         <p class="font-bold">Тип занятости</p>
         <NCheckbox
@@ -51,9 +68,9 @@ const scheduleOptions = [
         ></NCheckbox>
       </NSpace>
     </NCheckboxGroup>
-    <div>
-      <NButton type="default">Reset</NButton>
-      <NButton type="primary">Apply</NButton>
-    </div>
+    <NSpace>
+      <NButton type="default" @click="resetClicked">Reset</NButton>
+      <NButton type="primary" @click="handleFilter">Apply</NButton>
+    </NSpace>
   </NSpace>
 </template>
