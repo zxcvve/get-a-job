@@ -15,6 +15,7 @@ async function fetchSupabaseVacancies(page = 1, salaryFrom?, schedule?, event) {
         url,
         employer,
         service,
+        salary,
         minimal_salary: salary->from
       `,
       )
