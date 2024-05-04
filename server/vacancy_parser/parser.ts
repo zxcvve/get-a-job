@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-
+// TODO: запускать парсер через nuxt cron
 async function addHHVacanciesToDB() {
   const hhVacancies = await $fetch("api/vacancies/all");
 }

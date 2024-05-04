@@ -1,7 +1,7 @@
 // import { serverSupabaseClient } from "#supabase/server";
 import { fetchAllVacancies } from "~/server/api/hh/all";
 import { serverSupabaseClient } from "#supabase/server";
-
+// TODO: удалить это, когда будет реализован парсинг вакансий через nuxt cron
 async function addHHVacanciesToDB(event) {
   const supabase = await serverSupabaseClient(event);
 
