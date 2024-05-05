@@ -1,6 +1,5 @@
 <script setup>
 import { NFlex } from "naive-ui";
-import vacancyFilter from "~/components/VacancyFilter.vue";
 
 const vacancies = useState("vacancies");
 await callOnce(async () => {
