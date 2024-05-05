@@ -4,13 +4,15 @@ import vacancyFilter from "~/components/VacancyFilter.vue";
 
 const vacancies = useState("vacancies");
 await callOnce(async () => {
-  vacancies.value = await $fetch("/api/supabase/vacancies");
+  vacancies.value = await $fetch(
+    `${process.env.SERVER_URL}/api/supabase/vacancies`,
+  );
 });
 
 const filterVacancies = async (filter) => {
   if (filter.value.selectedSalary) {
     vacancies.value = await $fetch(
-      `/api/supabase/vacancies?salaryFrom=${filter.value.selectedSalary}`,
+      `${process.env.SERVER_URL}/api/supabase/vacancies?salaryFrom=${filter.value.selectedSalary}`,
     );
   }
 };
@@ -18,7 +20,9 @@ const filterVacancies = async (filter) => {
 const resetVacancies = async (filter) => {
   console.log(filter.value.selectedSalary);
   if (filter.value.selectedSalary !== undefined) {
-    vacancies.value = await $fetch("/api/supabase/vacancies");
+    vacancies.value = await $fetch(
+      `${process.env.SERVER_URL}/api/supabase/vacancies`,
+    );
   }
 };
 </script>
