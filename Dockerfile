@@ -22,8 +22,4 @@ WORKDIR /app
 
 COPY --from=builder /app/.output /app/.output/
 
-ENV NITRO_PORT=443
-
 CMD ["node",".output/server/index.mjs"]
-
-EXPOSE 443
