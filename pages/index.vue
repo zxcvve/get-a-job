@@ -15,11 +15,14 @@ const filterVacancies = async (filter) => {
 };
 
 const resetVacancies = async (filter) => {
-  console.log(filter.value.selectedSalary);
   if (filter.value.selectedSalary !== undefined) {
     vacancies.value = await $fetch("/api/supabase/vacancies");
   }
 };
+const selectedVacancyFilter = ref({
+  selectedSalary: undefined,
+  selectedSchedule: undefined,
+});
 </script>
 
 <template>
@@ -28,7 +31,7 @@ const resetVacancies = async (filter) => {
     <div class="flex justify-center">
       <NFlex vertical class="max-w-screen-md">
         <VacancyFilter
-          v-model:vacancyFilter="vacancyFilter"
+          v-model="selectedVacancyFilter"
           @filter-clicked="filterVacancies"
           @reset-clicked="resetVacancies"
         />
