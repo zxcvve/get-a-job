@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "nuxt-scheduler",
     "@bg-dev/nuxt-naiveui",
+    "@vite-pwa/nuxt",
   ],
   eslint: { lintOnStart: false },
   colorMode: { preference: "light" },
