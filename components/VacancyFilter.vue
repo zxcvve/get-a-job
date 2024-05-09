@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
   NButton,
-  NSpace,
-  NRadioGroup,
-  NRadio,
   NCheckbox,
   NCheckboxGroup,
+  NRadio,
+  NRadioGroup,
+  NSpace,
 } from "naive-ui";
 
 const salaryOptions = [
