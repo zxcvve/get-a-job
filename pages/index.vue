@@ -35,7 +35,7 @@ const selectedVacancyFilter = ref({
           @filter-clicked="filterVacancies"
           @reset-clicked="resetVacancies"
         />
-        <div v-for="vacancy in vacancies" :key="vacancy.id" class="m-1">
+        <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="m-1">
           <VacancyCard :vacancy="vacancy" />
         </div>
       </NFlex>
