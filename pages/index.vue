@@ -5,11 +5,18 @@ useHead({
   title: "Найди работу",
 });
 
+const page = ref(1);
+
 const vacancies = useState("vacancies");
+
 await callOnce(async () => {
-  vacancies.value = await $fetch("/api/supabase/vacancies");
+  vacancies.value = await $fetch(`/api/supabase/vacancies?page${page.value}`);
 });
 
+// TODO: fix pagination for cases where filters are used
+watchEffect(async () => {
+  vacancies.value = await $fetch(`/api/supabase/vacancies?page=${page.value}`);
+});
 const filterVacancies = async (filter) => {
   if (filter.value.selectedSalary) {
     vacancies.value = await $fetch(
@@ -42,6 +49,7 @@ const selectedVacancyFilter = ref({
         <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="m-1">
           <VacancyCard :vacancy="vacancy" />
         </div>
+        <NPagination v-model:page="page" :page-count="vacancies.pages" />
       </NFlex>
     </div>
   </naive-config>
