@@ -14,6 +14,7 @@ await callOnce(async () => {
 });
 
 // TODO: fix pagination for cases where filters are used
+// идея: засунуть полную ссылку в watchEffect, при изменении фильтров вакансии будут подгружаться автоматически
 watchEffect(async () => {
   vacancies.value = await $fetch(`/api/supabase/vacancies?page=${page.value}`);
 });
@@ -39,7 +40,7 @@ const selectedVacancyFilter = ref({
 <template>
   <naive-config>
     <div class="flex justify-center">
-      <div class="max-w-sm m-4 md:max-w-xl">
+      <div class="w-96 m-4 md:w-1/3">
         <NFlex vertical>
           <VacancyFilter
             v-model="selectedVacancyFilter"
