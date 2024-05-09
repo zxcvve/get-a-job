@@ -9,32 +9,32 @@ const page = ref(1);
 
 const vacancies = useState("vacancies");
 
-await callOnce(async () => {
-  vacancies.value = await $fetch(`/api/supabase/vacancies?page${page.value}`);
+const selectedVacancyFilter = ref({
+  selectedSalary: 0,
+  selectedSchedule: {},
 });
 
-// TODO: fix pagination for cases where filters are used
-// идея: засунуть полную ссылку в watchEffect, при изменении фильтров вакансии будут подгружаться автоматически
-watchEffect(async () => {
-  vacancies.value = await $fetch(`/api/supabase/vacancies?page=${page.value}`);
+await callOnce(async () => {
+  vacancies.value = await $fetch(
+    `/api/supabase/vacancies?page${page.value}&salaryFrom=0`,
+  );
 });
-const filterVacancies = async (filter) => {
-  if (filter.value.selectedSalary) {
-    vacancies.value = await $fetch(
-      `/api/supabase/vacancies?salaryFrom=${filter.value.selectedSalary}`,
-    );
-  }
-};
+
+watchEffect(async () => {
+  console.log(
+    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
+  );
+  vacancies.value = await $fetch(
+    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
+  );
+});
 
 const resetVacancies = async (filter) => {
   if (filter.value.selectedSalary !== undefined) {
-    vacancies.value = await $fetch("/api/supabase/vacancies");
+    selectedVacancyFilter.value.selectedSalary = 0;
+    selectedVacancyFilter.value.selectedSchedule = {};
   }
 };
-const selectedVacancyFilter = ref({
-  selectedSalary: undefined,
-  selectedSchedule: undefined,
-});
 </script>
 
 <template>
@@ -44,7 +44,6 @@ const selectedVacancyFilter = ref({
         <NFlex vertical>
           <VacancyFilter
             v-model="selectedVacancyFilter"
-            @filter-clicked="filterVacancies"
             @reset-clicked="resetVacancies"
           />
           <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="my-1">
