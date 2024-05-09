@@ -38,19 +38,20 @@ const selectedVacancyFilter = ref({
 
 <template>
   <naive-config>
-    <!--TODO: fix styling, use nuxtui Container and Skeleton maybe?-->
     <div class="flex justify-center">
-      <NFlex vertical>
-        <VacancyFilter
-          v-model="selectedVacancyFilter"
-          @filter-clicked="filterVacancies"
-          @reset-clicked="resetVacancies"
-        />
-        <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="m-1">
-          <VacancyCard :vacancy="vacancy" />
-        </div>
-        <NPagination v-model:page="page" :page-count="vacancies.pages" />
-      </NFlex>
+      <div class="max-w-xl m-4">
+        <NFlex vertical>
+          <VacancyFilter
+            v-model="selectedVacancyFilter"
+            @filter-clicked="filterVacancies"
+            @reset-clicked="resetVacancies"
+          />
+          <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="m-1">
+            <VacancyCard :vacancy="vacancy" />
+          </div>
+          <NPagination v-model:page="page" :page-count="vacancies.pages" />
+        </NFlex>
+      </div>
     </div>
   </naive-config>
 </template>
