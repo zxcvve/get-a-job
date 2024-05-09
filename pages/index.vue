@@ -46,7 +46,7 @@ const selectedVacancyFilter = ref({
             @filter-clicked="filterVacancies"
             @reset-clicked="resetVacancies"
           />
-          <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="m-1">
+          <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="my-1">
             <VacancyCard :vacancy="vacancy" />
           </div>
           <NPagination v-model:page="page" :page-count="vacancies.pages" />
