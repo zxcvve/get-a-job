@@ -30,18 +30,14 @@ const scheduleOptions = [
 
 const selectedVacancyFilter = defineModel({
   default: {
-    selectedSalary: undefined,
-    selectedSchedule: undefined,
+    selectedSalary: 0,
+    selectedSchedule: [],
   },
 });
 
-const emit = defineEmits(["filterClicked", "resetClicked"]);
-const handleFilter = () => {
-  emit("filterClicked", selectedVacancyFilter);
-};
-// TODO: разобраться, как сбрасывать состояние радио кнопок
+const emit = defineEmits(["resetClicked"]);
+
 const resetClicked = () => {
-  // vacancyFilter.value.selectedSalary = undefined;
   emit("resetClicked", selectedVacancyFilter);
 };
 </script>
@@ -70,8 +66,7 @@ const resetClicked = () => {
       </NSpace>
     </NCheckboxGroup>
     <NSpace>
-      <NButton type="default" @click="resetClicked">Reset</NButton>
-      <NButton type="primary" @click="handleFilter">Apply</NButton>
+      <NButton type="default" @click="resetClicked">Сброс</NButton>
     </NSpace>
   </NSpace>
 </template>
