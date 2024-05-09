@@ -1,12 +1,10 @@
 import { serverSupabaseClient } from "#supabase/server";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-async function getTotalPages(supabase: SupabaseClient) {
-  const { data, error } = await supabase.from("vacancy").select("*");
-  if (data) {
-    return Math.ceil(data?.length / 10);
+function getTotalPages(count: number | null) {
+  if (typeof count === "number") {
+    return Math.ceil(count / 10);
   }
-  return 1;
 }
 
 async function fetchSupabaseVacancies(
@@ -16,12 +14,11 @@ async function fetchSupabaseVacancies(
   schedule?: any,
 ) {
   const supabase = await serverSupabaseClient(event);
-  const totalPages = await getTotalPages(supabase);
   const pageMultiplier = 10 * (page - 1);
   const lowerRange = pageMultiplier;
   const upperRange = 9 + pageMultiplier;
   if (salaryFrom) {
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
       .from("vacancy")
       .select(
         `
@@ -33,15 +30,18 @@ async function fetchSupabaseVacancies(
         salary,
         minimal_salary: salary->from
       `,
+        { head: false, count: "exact" },
       )
       .gte("salary->from", salaryFrom)
       .range(lowerRange, upperRange);
-    return data;
+    const totalPages = getTotalPages(count);
+    return { data, pages: totalPages };
   }
-  const { data, error } = await supabase
+  const { data, error, count } = await supabase
     .from("vacancy")
-    .select("*")
+    .select("*", { count: "exact", head: false })
     .range(lowerRange, upperRange);
+  const totalPages = getTotalPages(count);
   return {
     data,
     pages: totalPages,
