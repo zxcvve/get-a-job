@@ -15,7 +15,7 @@ const salaryOptions = [
   { title: "От 40000", value: 40000 },
 ];
 
-// TODO: fix hydration errors
+// nuxt throws "hydration attribute mismatch" warns
 const scheduleOptions = [
   { id: "remote", name: "Удалённая работа" },
   {
