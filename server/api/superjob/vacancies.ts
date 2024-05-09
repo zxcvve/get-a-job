@@ -3,7 +3,7 @@ const SJ_VACANCIES =
 
 // TODO: add correct type definition for superjob API responses
 export async function fetchVacancies() {
-  // @ts-ignore
+  // @ts-expect-error
   return await $fetch(SJ_VACANCIES, {
     headers: {
       "X-Api-App-Id": process.env.SUPERJOB_KEY,
@@ -13,6 +13,6 @@ export async function fetchVacancies() {
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
-  // @ts-ignore
+  // @ts-expect-error
   return fetchVacancies(query.page);
 });

@@ -16,7 +16,7 @@ export default eventHandler(async (event) => {
       service: 1,
     },
   ];
-  // @ts-ignore
+  // @ts-expect-error
   const { data, error } = await supabase
     .from("vacancy")
     .insert(insertData)

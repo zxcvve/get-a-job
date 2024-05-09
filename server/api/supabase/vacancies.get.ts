@@ -50,7 +50,7 @@ async function fetchSupabaseVacancies(
 
 export default eventHandler(async (event) => {
   const query = getQuery(event);
-  // @ts-ignore
+  // @ts-expect-error
   return fetchSupabaseVacancies(
     event,
     query.page,
