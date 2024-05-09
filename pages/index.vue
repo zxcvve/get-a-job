@@ -40,7 +40,7 @@ const selectedVacancyFilter = ref({
   <naive-config>
     <!--TODO: fix styling, use nuxtui Container and Skeleton maybe?-->
     <div class="flex justify-center">
-      <NFlex vertical class="max-w-screen-md">
+      <NFlex vertical>
         <VacancyFilter
           v-model="selectedVacancyFilter"
           @filter-clicked="filterVacancies"
