@@ -10,14 +10,14 @@ function getTotalPages(count: number | null) {
 async function fetchSupabaseVacancies(
   event: any,
   page = 1,
-  salaryFrom?: any,
+  salaryFrom?: string | undefined,
   schedule?: any,
 ) {
   const supabase = await serverSupabaseClient(event);
   const pageMultiplier = 10 * (page - 1);
   const lowerRange = pageMultiplier;
   const upperRange = 9 + pageMultiplier;
-  if (salaryFrom) {
+  if (salaryFrom !== "0" && salaryFrom !== undefined) {
     const { data, error, count } = await supabase
       .from("vacancy")
       .select(
