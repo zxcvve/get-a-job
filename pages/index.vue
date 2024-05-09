@@ -39,7 +39,7 @@ const selectedVacancyFilter = ref({
 <template>
   <naive-config>
     <div class="flex justify-center">
-      <div class="max-w-xl m-4">
+      <div class="max-w-sm m-4 md:max-w-xl">
         <NFlex vertical>
           <VacancyFilter
             v-model="selectedVacancyFilter"
