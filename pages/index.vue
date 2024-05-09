@@ -11,7 +11,7 @@ const vacancies = useState("vacancies");
 
 const selectedVacancyFilter = ref({
   selectedSalary: 0,
-  selectedSchedule: {},
+  selectedSchedule: [],
 });
 
 await callOnce(async () => {
@@ -21,18 +21,20 @@ await callOnce(async () => {
 });
 
 watchEffect(async () => {
-  console.log(
-    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
-  );
   vacancies.value = await $fetch(
     `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
   );
 });
 
+watch([selectedVacancyFilter.value], async () => {
+  page.value = 1;
+});
+
 const resetVacancies = async (filter) => {
   if (filter.value.selectedSalary !== undefined) {
+    page.value = 1;
     selectedVacancyFilter.value.selectedSalary = 0;
-    selectedVacancyFilter.value.selectedSchedule = {};
+    selectedVacancyFilter.value.selectedSchedule = [];
   }
 };
 </script>
