@@ -15,6 +15,7 @@ const salaryOptions = [
   { title: "От 40000", value: 40000 },
 ];
 
+// TODO: fix hydration errors
 const scheduleOptions = [
   { id: "remote", name: "Удалённая работа" },
   {
@@ -27,7 +28,7 @@ const scheduleOptions = [
   },
 ];
 
-const vacancyFilter = defineModel({
+const selectedVacancyFilter = defineModel({
   default: {
     selectedSalary: undefined,
     selectedSchedule: undefined,
@@ -36,17 +37,17 @@ const vacancyFilter = defineModel({
 
 const emit = defineEmits(["filterClicked", "resetClicked"]);
 const handleFilter = () => {
-  emit("filterClicked", vacancyFilter);
+  emit("filterClicked", selectedVacancyFilter);
 };
 // TODO: разобраться, как сбрасывать состояние радио кнопок
 const resetClicked = () => {
   // vacancyFilter.value.selectedSalary = undefined;
-  emit("resetClicked", vacancyFilter);
+  emit("resetClicked", selectedVacancyFilter);
 };
 </script>
 <template>
   <NSpace vertical>
-    <NRadioGroup v-model:value="vacancyFilter.selectedSalary">
+    <NRadioGroup v-model:value="selectedVacancyFilter.selectedSalary">
       <NSpace vertical>
         <p class="font-bold">Уровень дохода</p>
         <NRadio
@@ -57,7 +58,7 @@ const resetClicked = () => {
         ></NRadio>
       </NSpace>
     </NRadioGroup>
-    <NCheckboxGroup v-model:value="vacancyFilter.selectedSchedule">
+    <NCheckboxGroup v-model:value="selectedVacancyFilter.selectedSchedule">
       <NSpace vertical>
         <p class="font-bold">Тип занятости</p>
         <NCheckbox
