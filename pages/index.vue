@@ -1,6 +1,10 @@
 <script setup>
 import { NFlex } from "naive-ui";
 
+useHead({
+  title: "Найди работу",
+});
+
 const vacancies = useState("vacancies");
 await callOnce(async () => {
   vacancies.value = await $fetch("/api/supabase/vacancies");
