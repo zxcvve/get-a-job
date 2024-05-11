@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Vacancy } from "~/types/jobs";
+import type { HHVacancy } from "~/types/jobs";
 import { NCard } from "naive-ui";
 
-const props = defineProps<{ vacancy: Vacancy }>();
+const props = defineProps<{ vacancy: HHVacancy }>();
 </script>
 
 <template>

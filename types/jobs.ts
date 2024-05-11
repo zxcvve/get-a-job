@@ -1,4 +1,4 @@
-export type Vacancy = {
+export type HHVacancy = {
   name: string;
   salary: Salary;
   alternate_url: string;
@@ -42,7 +42,7 @@ export type Schedule = {
 };
 
 export type HHVacanciesResponse = {
-  items: Vacancy[];
+  items: HHVacancy[];
   found: number;
   pages: number;
   page: number;

@@ -1,11 +1,11 @@
 import { fetchVacancies } from "~/server/api/hh/vacancies";
-import type { Vacancy } from "~/types/jobs";
+import type { HHVacancy } from "~/types/jobs";
 
 export async function fetchAllVacancies() {
   const res = await fetchVacancies();
   const pagesTotal = res.pages;
 
-  const vacancies: Vacancy[] = [];
+  const vacancies: HHVacancy[] = [];
   let page = 0;
   while (page < pagesTotal) {
     const res = await fetchVacancies(page);
