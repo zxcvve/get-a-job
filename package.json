@@ -24,6 +24,7 @@
     "eslint-config-prettier": "^9.1.0",
     "naive-ui": "^2.38.2",
     "nuxt": "^3.11.2",
+    "nuxt-cron": "^1.5.1",
     "nuxt-scheduler": "^0.1.9",
     "prettier": "3.2.5"
   }
