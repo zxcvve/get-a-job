@@ -3,14 +3,17 @@ import type { HHVacancy, SupabaseVacancy } from "~/types/jobs";
 import { defineCronHandler } from "#nuxt/cron";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
-import { useLogger } from "@nuxt/kit";
 
-async function clearDB(supabase: SupabaseClient, tableName: string) {
+async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
+  // time delta calculations for removing vacancies older than 24 hours
+  const now = Date.now();
+  const timestamp24HoursBefore = now - 24 * 60 * 60 * 1000;
+  const timeDelta = new Date(timestamp24HoursBefore).toISOString();
+
   const { error } = await supabase
     .from(tableName)
     .delete()
-    .in("id", [...Array(1000).keys()]);
-
+    .lt("created_at", timeDelta);
   return error;
 }
 
@@ -32,7 +35,7 @@ async function addHHVacanciesToDB(supabase: SupabaseClient) {
 
     insertDataArray.push(insertData);
   });
-  const res = await clearDB(supabase, "vacancy2");
+  const res = await deleteOldVacancies(supabase, "vacancy2");
   if (!res) {
     const { error } = await supabase.from("vacancy2").insert(insertDataArray);
     return error;
@@ -47,11 +50,7 @@ export default defineCronHandler(
       process.env.SUPABASE_KEY!,
     );
 
-    const res = await addHHVacanciesToDB(supabase);
-    const logger = useLogger("cron-vacancies");
-    if (res) {
-      logger.error(res);
-    }
+    await addHHVacanciesToDB(supabase);
   },
   { runOnInit: true },
 );
