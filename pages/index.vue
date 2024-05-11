@@ -20,14 +20,14 @@ await callOnce(async () => {
   );
 });
 
+watch([selectedVacancyFilter.value], async () => {
+  page.value = 1;
+});
+
 watchEffect(async () => {
   vacancies.value = await $fetch(
     `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
   );
-});
-
-watch([selectedVacancyFilter.value], async () => {
-  page.value = 1;
 });
 
 const resetVacancies = async (filter) => {
