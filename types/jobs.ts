@@ -8,6 +8,17 @@ export type HHVacancy = {
   employment: Employment;
 };
 
+export type SupabaseVacancy = {
+  name: string;
+  salary: Salary;
+  url: string;
+  employer: string;
+  schedule: Schedule;
+  experience: Experience;
+  employment: Employment;
+  service: number;
+};
+
 export type Employment = {
   id: number;
   name: string;
