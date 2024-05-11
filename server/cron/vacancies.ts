@@ -7,8 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
   // time delta calculations for removing vacancies older than 24 hours
   const now = Date.now();
-  const timestamp24HoursBefore = now - 24 * 60 * 60 * 1000;
-  const timeDelta = new Date(timestamp24HoursBefore).toISOString();
+  const timestamp12HoursBefore = now - 12 * 60 * 60 * 1000;
+  const timeDelta = new Date(timestamp12HoursBefore).toISOString();
 
   const { error } = await supabase
     .from(tableName)
@@ -35,9 +35,9 @@ async function addHHVacanciesToDB(supabase: SupabaseClient) {
 
     insertDataArray.push(insertData);
   });
-  const res = await deleteOldVacancies(supabase, "vacancy2");
+  const res = await deleteOldVacancies(supabase, "vacancy");
   if (!res) {
-    const { error } = await supabase.from("vacancy2").insert(insertDataArray);
+    const { error } = await supabase.from("vacancy").insert(insertDataArray);
     return error;
   }
 }
