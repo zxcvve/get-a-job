@@ -1,12 +1,21 @@
 export type Vacancy = {
+  name: string;
+  salary: Salary;
+  alternate_url: string;
   employer: Employer;
+  schedule: Schedule;
+  experience: Experience;
+  employment: Employment;
+};
+
+export type Employment = {
   id: number;
   name: string;
-  premium: boolean;
-  salary?: Salary;
-  schedule: Schedule;
-  alternate_url: string;
-  url: string;
+};
+
+export type Experience = {
+  id: number;
+  name: string;
 };
 
 export type Salary = {
@@ -32,7 +41,7 @@ export type Schedule = {
   name: string;
 };
 
-export type VacanciesResponse = {
+export type HHVacanciesResponse = {
   items: Vacancy[];
   found: number;
   pages: number;
