@@ -14,4 +14,9 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
+  cron: {
+    runOnInit: true,
+    timeZone: "Europe/Moscow",
+    jobsDir: "cron",
+  },
 });
