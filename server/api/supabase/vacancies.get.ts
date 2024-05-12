@@ -7,20 +7,23 @@ function getTotalPages(count: number | null) {
   }
 }
 
+type VacancyFilters = {
+  salaryFrom?: number;
+  isRemote?: boolean;
+  isFlexible?: boolean;
+};
+
 async function fetchSupabaseVacancies(
   event: H3Event<EventHandlerRequest>,
   page = 1,
-  salaryFrom?: number | undefined,
+  vacancyFilters: VacancyFilters,
 ) {
   const supabase = await serverSupabaseClient(event);
   const pageMultiplier = 10 * (page - 1);
   const lowerRange = pageMultiplier;
   const upperRange = 9 + pageMultiplier;
-  if (salaryFrom !== 0 && salaryFrom !== undefined) {
-    const { data, count } = await supabase
-      .from("vacancy")
-      .select(
-        `
+  let query = supabase.from("vacancy").select(
+    `
         id,
         name,
         url,
@@ -29,17 +32,17 @@ async function fetchSupabaseVacancies(
         salary,
         minimal_salary: salary->from
       `,
-        { head: false, count: "exact" },
-      )
-      .gte("salary->from", salaryFrom)
-      .range(lowerRange, upperRange);
-    const totalPages = getTotalPages(count);
-    return { data, pages: totalPages };
+    { head: false, count: "exact" },
+  );
+
+  if (
+    vacancyFilters.salaryFrom !== 0 &&
+    vacancyFilters.salaryFrom !== undefined
+  ) {
+    query = query.gte("salary->from", vacancyFilters.salaryFrom);
   }
-  const { data, count } = await supabase
-    .from("vacancy")
-    .select("*", { count: "exact", head: false })
-    .range(lowerRange, upperRange);
+  query = query.range(lowerRange, upperRange);
+  const { data, count } = await query;
   const totalPages = getTotalPages(count);
   return {
     data,
@@ -51,9 +54,11 @@ export default eventHandler(async (event) => {
   type queryValue = {
     page: number;
     salaryFrom: number;
-    schedule: string;
   };
   // TODO: implement schedule filtering
   const query: queryValue = getQuery(event);
-  return fetchSupabaseVacancies(event, query.page, query.salaryFrom);
+  const vacancyFilters: VacancyFilters = {
+    salaryFrom: query.salaryFrom,
+  };
+  return fetchSupabaseVacancies(event, query.page, vacancyFilters);
 });
