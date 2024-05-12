@@ -10,33 +10,39 @@ async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
   const timestamp12HoursBefore = now - 12 * 60 * 60 * 1000;
   const timeDelta = new Date(timestamp12HoursBefore).toISOString();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from(tableName)
     .delete()
-    .lt("created_at", timeDelta);
-  return error;
+    .lt("created_at", timeDelta)
+    .select();
+  return { data, error };
 }
 
 async function addHHVacanciesToDB(supabase: SupabaseClient) {
-  const hhVacancies: HHVacancy[] = await fetchAllHHVacancies();
-
-  const insertDataArray: SupabaseVacancy[] = [];
-  hhVacancies.map((vacancy) => {
-    const insertData: SupabaseVacancy = {
-      name: vacancy.name,
-      salary: vacancy.salary,
-      url: vacancy.alternate_url,
-      employer: vacancy.employer.name,
-      schedule: vacancy.schedule,
-      experience: vacancy.experience,
-      employment: vacancy.employment,
-      service: 1,
-    };
-
-    insertDataArray.push(insertData);
-  });
   const res = await deleteOldVacancies(supabase, "vacancy");
-  if (!res) {
+
+  if (!res.data) {
+    return res.error;
+  }
+
+  if (res?.data?.length > 0) {
+    const hhVacancies: HHVacancy[] = await fetchAllHHVacancies();
+    const insertDataArray: SupabaseVacancy[] = [];
+    hhVacancies.map((vacancy) => {
+      const insertData: SupabaseVacancy = {
+        name: vacancy.name,
+        salary: vacancy.salary,
+        url: vacancy.alternate_url,
+        employer: vacancy.employer.name,
+        schedule: vacancy.schedule,
+        experience: vacancy.experience,
+        employment: vacancy.employment,
+        service: 1,
+      };
+
+      insertDataArray.push(insertData);
+    });
+
     const { error } = await supabase.from("vacancy").insert(insertDataArray);
     return error;
   }
