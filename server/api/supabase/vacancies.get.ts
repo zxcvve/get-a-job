@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { EventHandlerRequest, H3Event } from "h3";
 
 function getTotalPages(count: number | null) {
   if (typeof count === "number") {
@@ -8,17 +8,16 @@ function getTotalPages(count: number | null) {
 }
 
 async function fetchSupabaseVacancies(
-  event: any,
+  event: H3Event<EventHandlerRequest>,
   page = 1,
-  salaryFrom?: string | undefined,
-  schedule?: any,
+  salaryFrom?: number | undefined,
 ) {
   const supabase = await serverSupabaseClient(event);
   const pageMultiplier = 10 * (page - 1);
   const lowerRange = pageMultiplier;
   const upperRange = 9 + pageMultiplier;
-  if (salaryFrom !== "0" && salaryFrom !== undefined) {
-    const { data, error, count } = await supabase
+  if (salaryFrom !== 0 && salaryFrom !== undefined) {
+    const { data, count } = await supabase
       .from("vacancy")
       .select(
         `
@@ -37,7 +36,7 @@ async function fetchSupabaseVacancies(
     const totalPages = getTotalPages(count);
     return { data, pages: totalPages };
   }
-  const { data, error, count } = await supabase
+  const { data, count } = await supabase
     .from("vacancy")
     .select("*", { count: "exact", head: false })
     .range(lowerRange, upperRange);
@@ -49,12 +48,12 @@ async function fetchSupabaseVacancies(
 }
 
 export default eventHandler(async (event) => {
-  const query = getQuery(event);
-  // @ts-expect-error
-  return fetchSupabaseVacancies(
-    event,
-    query.page,
-    query.salaryFrom,
-    query.schedule,
-  );
+  type queryValue = {
+    page: number;
+    salaryFrom: number;
+    schedule: string;
+  };
+  // TODO: implement schedule filtering
+  const query: queryValue = getQuery(event);
+  return fetchSupabaseVacancies(event, query.page, query.salaryFrom);
 });
