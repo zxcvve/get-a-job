@@ -14,7 +14,6 @@ export async function fetchVacancies(
 }
 
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event);
-  // @ts-expect-error
+  const query: { page: number } = getQuery(event);
   return fetchVacancies(query.page);
 });
