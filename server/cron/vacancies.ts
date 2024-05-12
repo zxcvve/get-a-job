@@ -1,4 +1,4 @@
-import { fetchAllVacancies } from "~/server/api/hh/all";
+import { fetchAllHHVacancies } from "~/server/api/hh/all";
 import type { HHVacancy, SupabaseVacancy } from "~/types/jobs";
 import { defineCronHandler } from "#nuxt/cron";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -18,7 +18,7 @@ async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
 }
 
 async function addHHVacanciesToDB(supabase: SupabaseClient) {
-  const hhVacancies: HHVacancy[] = await fetchAllVacancies();
+  const hhVacancies: HHVacancy[] = await fetchAllHHVacancies();
 
   const insertDataArray: SupabaseVacancy[] = [];
   hhVacancies.map((vacancy) => {

@@ -1,7 +1,7 @@
 import { fetchVacancies } from "~/server/api/hh/vacancies";
 import type { HHVacancy } from "~/types/jobs";
 
-export async function fetchAllVacancies() {
+export async function fetchAllHHVacancies() {
   const res = await fetchVacancies();
   const pagesTotal = res.pages;
 
@@ -18,5 +18,5 @@ export async function fetchAllVacancies() {
 }
 
 export default defineEventHandler(async () => {
-  return fetchAllVacancies();
+  return fetchAllHHVacancies();
 });
