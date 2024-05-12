@@ -58,7 +58,7 @@ export default eventHandler(async (event) => {
   // TODO: implement schedule filtering
   const query: queryValue = getQuery(event);
   const vacancyFilters: VacancyFilters = {
-    salaryFrom: query.salaryFrom,
+    salaryFrom: Number(query.salaryFrom),
   };
   return fetchSupabaseVacancies(event, query.page, vacancyFilters);
 });
