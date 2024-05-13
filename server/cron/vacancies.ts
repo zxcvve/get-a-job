@@ -1,5 +1,5 @@
 import { fetchAllHHVacancies } from "~/server/api/hh/all";
-import type { HHVacancy, SupabaseVacancy } from "~/types/jobs";
+import type { HHVacancy, SupabaseVacancy, SuperJobVacancy } from "~/types/jobs";
 import { defineCronHandler } from "#nuxt/cron";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
@@ -18,6 +18,26 @@ async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
   return { data, error };
 }
 
+async function collectHHVacancies() {
+  const hhVacancies: HHVacancy[] = await fetchAllHHVacancies();
+  const processedHHVacancies: SupabaseVacancy[] = [];
+  hhVacancies.map((vacancy) => {
+    const insertData: SupabaseVacancy = {
+      name: vacancy.name,
+      salary: vacancy.salary,
+      url: vacancy.alternate_url,
+      employer: vacancy.employer.name,
+      schedule: vacancy.schedule,
+      experience: vacancy.experience,
+      employment: vacancy.employment,
+      service: 1,
+    };
+
+    processedHHVacancies.push(insertData);
+  });
+  return processedHHVacancies;
+}
+
 async function addHHVacanciesToDB(supabase: SupabaseClient) {
   const res = await deleteOldVacancies(supabase, "vacancy");
 
@@ -25,27 +45,15 @@ async function addHHVacanciesToDB(supabase: SupabaseClient) {
     return res.error;
   }
 
+  const processedVacancies: SupabaseVacancy[] = [];
+
   if (res?.data?.length > 0) {
-    const hhVacancies: HHVacancy[] = await fetchAllHHVacancies();
-    const insertDataArray: SupabaseVacancy[] = [];
-    hhVacancies.map((vacancy) => {
-      const insertData: SupabaseVacancy = {
-        name: vacancy.name,
-        salary: vacancy.salary,
-        url: vacancy.alternate_url,
-        employer: vacancy.employer.name,
-        schedule: vacancy.schedule,
-        experience: vacancy.experience,
-        employment: vacancy.employment,
-        service: 1,
-      };
-
-      insertDataArray.push(insertData);
-    });
-
-    const { error } = await supabase.from("vacancy").insert(insertDataArray);
-    return error;
+    const HHVacancies = await collectHHVacancies();
+    processedVacancies.concat(HHVacancies);
   }
+
+  const { error } = await supabase.from("vacancy").insert(processedVacancies);
+  return error;
 }
 
 export default defineCronHandler(
