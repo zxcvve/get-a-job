@@ -15,7 +15,7 @@ export type SupabaseVacancy = {
   employer: string;
   schedule: Schedule;
   experience: Experience;
-  employment: Employment;
+  employment?: Employment;
   service: number;
 };
 
@@ -25,13 +25,13 @@ export type Employment = {
 };
 
 export type Experience = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type Salary = {
-  from: number;
-  to: number;
+  from: number | null;
+  to: number | null;
   currency: string;
   gross: boolean;
 };
