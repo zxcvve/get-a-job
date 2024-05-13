@@ -1,7 +1,7 @@
 import { fetchVacancies } from "~/server/api/superjob/vacancies";
 import type { SuperJobVacancy } from "~/types/jobs";
 
-export async function fetchAllHHVacancies() {
+export async function fetchAllSuperJobVacancies() {
   const res = await fetchVacancies();
 
   const vacancies: SuperJobVacancy[] = [];
@@ -19,5 +19,5 @@ export async function fetchAllHHVacancies() {
 }
 
 export default defineEventHandler(async () => {
-  return fetchAllHHVacancies();
+  return fetchAllSuperJobVacancies();
 });
