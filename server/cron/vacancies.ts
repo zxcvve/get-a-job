@@ -18,12 +18,16 @@ async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
   const timestamp12HoursBefore = now - 12 * 60 * 60 * 1000;
   const timeDelta = new Date(timestamp12HoursBefore).toISOString();
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from(tableName)
     .delete()
-    .lt("created_at", timeDelta)
-    .select();
-  return { data, error };
+    .lt("created_at", timeDelta);
+
+  const { count } = await supabase
+    .from(tableName)
+    .select("*", { head: true, count: "exact" });
+
+  return { count, error };
 }
 
 async function collectSuperJobVacancies() {
@@ -106,25 +110,24 @@ async function collectHHVacancies() {
   return processedHHVacancies;
 }
 
-async function addHHVacanciesToDB(supabase: SupabaseClient) {
+async function addVacanciesToDB(supabase: SupabaseClient) {
   const res = await deleteOldVacancies(supabase, "vacancy");
 
-  if (!res.data) {
+  if (!res.count) {
     return res.error;
   }
 
-  const processedVacancies: SupabaseVacancy[] = [];
-
-  if (res?.data?.length > 0) {
+  if (res.count === 0) {
+    let processedVacancies: SupabaseVacancy[] = [];
     const HHVacancies = await collectHHVacancies();
-    processedVacancies.concat(HHVacancies);
+    processedVacancies = processedVacancies.concat(HHVacancies);
 
     const superJobVacancies = await collectSuperJobVacancies();
-    processedVacancies.concat(superJobVacancies);
-  }
+    processedVacancies = processedVacancies.concat(superJobVacancies);
 
-  const { error } = await supabase.from("vacancy").insert(processedVacancies);
-  return error;
+    const { error } = await supabase.from("vacancy").insert(processedVacancies);
+    return error;
+  }
 }
 
 export default defineCronHandler(
@@ -135,7 +138,7 @@ export default defineCronHandler(
       process.env.SUPABASE_KEY!,
     );
 
-    await addHHVacanciesToDB(supabase);
+    await addVacanciesToDB(supabase);
   },
   { runOnInit: true },
 );
