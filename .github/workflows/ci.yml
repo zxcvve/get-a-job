@@ -52,8 +52,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            docker stop ${{env.CONTAINER_NAME}} 
-            docker rm ${{env.CONTAINER_NAME}} 
+            docker stop ${{env.CONTAINER_NAME}} || true && docker rm ${{env.CONTAINER_NAME}} || true
             docker rmi -f ${{env.IMAGE_NAME}} 
             docker pull ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} 
             docker run -d -p 1555:3000 --name ${{env.CONTAINER_NAME}} ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
