@@ -113,7 +113,7 @@ async function collectHHVacancies() {
 async function addVacanciesToDB(supabase: SupabaseClient) {
   const res = await deleteOldVacancies(supabase, "vacancy");
 
-  if (!res.count) {
+  if (res.error) {
     return res.error;
   }
 
