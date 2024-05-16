@@ -4,6 +4,7 @@ on: push
 env:
   IMAGE_NAME: ghcr.io/zxcvve/get-a-job
   IMAGE_TAG: latest
+  CONTAINER_NAME: get-a-job
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -38,28 +39,21 @@ jobs:
             SUPERJOB_ID=${{secrets.SUPERJOB_ID}}
             SUPERJOB_KEY=${{secrets.SUPERJOB_KEY}} 
 
-#  deploy:
-#    needs: docker
-#    environment: get-a-job
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Deploy using ssh
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          key: ${{ secrets.KEY }}
-#          port: 22
-#          script: |
-#            docker stop air_app
-#            docker rm air_app
-#            docker rmi -f ghcr.io/zxcvve/air_app
-#            docker pull ghcr.io/zxcvve/air_app:latest
-#            docker run -e DB_HOST=${{secrets.DB_HOST}} \
-#            -e DB_PASSWORD=${{secrets.DB_PASSWORD}} \
-#            -e DB_USER=${{secrets.DB_USER}} \
-#            -e DB_NAME=${{secrets.DB_NAME}} \
-#            -e SESSION_PASSWORD=${{secrets.SESSION_PASSWORD}} \
-#            -e URL=${{secrets.URL}} \
-#            -e TZ=Europe/Moscow \
-#            -d -p 3000:3000 --name air_app ghcr.io/zxcvve/air_app:latest
+  deploy:
+    needs: docker
+    environment: get-a-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            docker stop ${{env.CONTAINER_NAME}} 
+            docker rm ${{env.CONTAINER_NAME}} 
+            docker rmi -f ${{env.IMAGE_NAME}} 
+            docker pull ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} 
+            docker run -d -p 1555:3000 --name ${{env.CONTAINER_NAME}} ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
