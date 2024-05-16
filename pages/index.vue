@@ -24,7 +24,7 @@ watch([selectedVacancyFilter.value], async () => {
   page.value = 1;
 });
 
-watchEffect(async () => {
+watch([page, selectedVacancyFilter.value], async () => {
   vacancies.value = await $fetch(
     `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
   );
