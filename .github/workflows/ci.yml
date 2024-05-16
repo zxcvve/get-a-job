@@ -2,8 +2,8 @@ name: CI
 on: push
 
 env:
-  IMAGE_TAG: ghcr.io/zxcvve/get-a-job:latest
-
+  IMAGE_NAME: ghcr.io/zxcvve/get-a-job
+  IMAGE_TAG: latest
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{env.IMAGE_TAG}}
+          tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
           env: |
             SUPABASE_KEY=${{secrets.SUPABASE_KEY}}
             SUPABASE_URL=${{secrets.SUPABASE_URL}}
@@ -40,7 +40,7 @@ jobs:
 
 #  deploy:
 #    needs: docker
-#    environment: SSH Deploy
+#    environment: get-a-job
 #    runs-on: ubuntu-latest
 #    steps:
 #      - name: Deploy using ssh
@@ -48,7 +48,7 @@ jobs:
 #        with:
 #          host: ${{ secrets.HOST }}
 #          username: ${{ secrets.USERNAME }}
-#          key: ${{ secrets.PRIVATE_KEY }}
+#          key: ${{ secrets.KEY }}
 #          port: 22
 #          script: |
 #            docker stop air_app
