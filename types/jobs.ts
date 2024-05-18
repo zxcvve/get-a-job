@@ -9,6 +9,7 @@ export type HHVacancy = {
 };
 
 export type SupabaseVacancy = {
+  id: number;
   name: string;
   salary: Salary;
   url: string;
