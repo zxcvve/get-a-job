@@ -34,10 +34,9 @@ jobs:
         with:
           push: true
           tags: "${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}"
-          secret-envs: |
+          build-args: |
+            "SUPABASE_URL=${{ secrets.SUPABASE_KEY }}"
             "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}"
-            "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
-            "SUPERJOB_ID=${{ secrets.SUPERJOB_ID }}"
             "SUPERJOB_KEY=${{ secrets.SUPERJOB_KEY }}"
 
   deploy:
