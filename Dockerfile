@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN --mount=type=secret,id=SUPABASE_URL \
-    --mount=type=secret,id=SUPABASE_KEY \
-    --mount=type=secret,id=SUPERJOB_KEY \
+RUN --mount=type=secret,id=supabase_url \
+    --mount=type=secret,id=supabase_key \
+    --mount=type=secret,id=superjob_key \
     export SUPABASE_URL=$(cat /run/secrets/supabase_url) && \
     export SUPABASE_KEY=$(cat /run/secrets/supabase_key) && \
     export SUPERJOB_KEY=$(cat /run/secrets/superjob_key) && \
