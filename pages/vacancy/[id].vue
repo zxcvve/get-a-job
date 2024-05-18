@@ -3,18 +3,17 @@ import type { SupabaseVacancy } from "~/types/jobs";
 
 const route = useRoute();
 
-const vacancy: SupabaseVacancy = await $fetch(
-  `/api/supabase/${route.params.id}`,
-);
-if (!vacancy) {
+const { data: vacancy } = await useFetch(`/api/supabase/${route.params.id}`);
+
+if (!vacancy.value) {
   await navigateTo("/");
 }
 
-let salaryString = `От ${vacancy.salary.from}`;
-if (vacancy.salary.to) {
-  salaryString += ` до ${vacancy.salary.to}`;
+let salaryString = `От ${vacancy.value.salary.from}`;
+if (vacancy.value.salary.to) {
+  salaryString += ` до ${vacancy.value.salary.to}`;
 }
-if (vacancy.salary.currency === "RUR") {
+if (vacancy.value.salary.currency === "RUR") {
   salaryString += ` ₽`;
 }
 </script>
