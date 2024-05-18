@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HHVacancy, SupabaseVacancy } from "~/types/jobs";
+import type { SupabaseVacancy } from "~/types/jobs";
 import { NCard } from "naive-ui";
 
 const props = defineProps<{ vacancy: SupabaseVacancy }>();

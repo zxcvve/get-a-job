@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { SupabaseVacancy } from "~/types/jobs";
-
 useHead({
   title: "Детали вакансии",
 });
@@ -19,6 +17,7 @@ if (vacancy.value.salary) {
     salaryString += ` до ${vacancy.value.salary.to}`;
   }
   if (vacancy.value.salary.currency === "RUR") {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     salaryString += ` ₽`;
   }
 }
