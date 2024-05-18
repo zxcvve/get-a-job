@@ -3,11 +3,12 @@ import type { HHVacancy, SupabaseVacancy } from "~/types/jobs";
 import { NCard } from "naive-ui";
 
 const props = defineProps<{ vacancy: SupabaseVacancy }>();
+const vacancyPage = `/vacancy/${props.vacancy.id}`;
 </script>
 
 <template>
   <!--  TODO: fix db schema so it represents actual types-->
-  <NuxtLink :to="props.vacancy.url">
+  <NuxtLink :to="vacancyPage">
     <NCard>
       <template #header>
         <!--      <Placeholder class="h-8" />-->
