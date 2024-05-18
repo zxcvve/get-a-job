@@ -1,5 +1,7 @@
 import type { SuperJobVacanciesResponse } from "~/types/jobs";
 
+const runtimeConfig = useRuntimeConfig();
+
 const SJ_VACANCIES =
   "https://api.superjob.ru/2.0/vacancies?town=Великий Новгород&catalogues=33";
 
@@ -8,7 +10,7 @@ export async function fetchVacancies(
 ): Promise<SuperJobVacanciesResponse> {
   return await $fetch(SJ_VACANCIES + `&page=${page}`, {
     headers: {
-      "X-Api-App-Id": process.env.SUPERJOB_KEY!,
+      "X-Api-App-Id": runtimeConfig.superjobKey,
     },
   });
 }

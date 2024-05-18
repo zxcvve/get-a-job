@@ -12,6 +12,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
 import { fetchAllSuperJobVacancies } from "~/server/api/superjob/all";
 
+const runtimeConfig = useRuntimeConfig();
+
 async function deleteOldVacancies(supabase: SupabaseClient, tableName: string) {
   // time delta calculations for removing vacancies older than 24 hours
   const now = Date.now();
@@ -134,8 +136,8 @@ export default defineCronHandler(
   "daily",
   async () => {
     const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_KEY!,
+      runtimeConfig.supabaseUrl,
+      runtimeConfig.supabaseKey,
     );
 
     await addVacanciesToDB(supabase);
