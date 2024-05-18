@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { SupabaseVacancy } from "~/types/jobs";
 
+useHead({
+  title: "Детали вакансии",
+});
+
 const route = useRoute();
 
 const { data: vacancy } = await useFetch(`/api/supabase/${route.params.id}`);
@@ -9,12 +13,14 @@ if (!vacancy.value) {
   await navigateTo("/");
 }
 
-let salaryString = `От ${vacancy.value.salary.from}`;
-if (vacancy.value.salary.to) {
-  salaryString += ` до ${vacancy.value.salary.to}`;
-}
-if (vacancy.value.salary.currency === "RUR") {
-  salaryString += ` ₽`;
+if (vacancy.value.salary) {
+  let salaryString = `От ${vacancy.value.salary.from}`;
+  if (vacancy.value.salary.to) {
+    salaryString += ` до ${vacancy.value.salary.to}`;
+  }
+  if (vacancy.value.salary.currency === "RUR") {
+    salaryString += ` ₽`;
+  }
 }
 
 let vacancyDescription = "";
