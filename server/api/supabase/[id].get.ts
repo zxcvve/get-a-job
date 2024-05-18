@@ -13,6 +13,9 @@ async function getVacancy(event: H3Event<EventHandlerRequest>, id: number) {
         employer,
         service,
         salary,
+        schedule,
+        experience,
+        employment,
         minimal_salary: salary->from
       `,
     )
