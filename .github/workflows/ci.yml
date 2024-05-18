@@ -33,11 +33,11 @@ jobs:
         with:
           push: true
           tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
-          secret-envs: |
-            key=SUPABASE_KEY,SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}
-            key=SUPABASE_URL,SUPABASE_URL=${{ secrets.SUPABASE_URL }}
-            key=SUPERJOB_ID,SUPERJOB_ID=${{ secrets.SUPERJOB_ID }}
-            key=SUPERJOB_KEY,SUPERJOB_KEY=${{ secrets.SUPERJOB_KEY }}
+          secrets: |
+            "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}"
+            "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
+            "SUPERJOB_ID=${{ secrets.SUPERJOB_ID }}"
+            "SUPERJOB_KEY=${{ secrets.SUPERJOB_KEY }}"
 
   deploy:
     needs: docker
