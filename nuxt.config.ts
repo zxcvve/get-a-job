@@ -19,4 +19,10 @@ export default defineNuxtConfig({
     timeZone: "Europe/Moscow",
     jobsDir: "cron",
   },
+  runtimeConfig: {
+    supabaseUrl: "",
+    supabaseKey: "",
+    superjobId: "",
+    superjobKey: "",
+  },
 });
