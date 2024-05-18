@@ -4,20 +4,20 @@ WORKDIR /app
 
 COPY . /app
 
-RUN --mount=type=secret,id=supabase_url \
-    --mount=type=secret,id=supabase_key \
-    --mount=type=secret,id=superjob_key \
-    export NUXT_SUPABASE_URL=$(cat /run/secrets/supabase_url) && \
-    export NUXT_SUPABASE_KEY=$(cat /run/secrets/supabase_key) && \
-    export NUXT_SUPERJOB_KEY=$(cat /run/secrets/superjob_key) && \
-    echo NUXT_SUPABASE_URL=$(cat /run/secrets/supabase_url) >> .env && \
-    echo NUXT_SUPABASE_KEY=$(cat /run/secrets/supabase_key) >> .env && \
-    echo SUPABASE_URL=$(cat /run/secrets/supabase_url) >> .env && \
-    echo SUPABASE_KEY=$(cat /run/secrets/supabase_key) >> .env && \
-    echo NUXT_SUPERJOB_KEY=$(cat /run/secrets/superjob_key) >> .env && \
+RUN --mount=type=secret,id=SUPABASE_URL \
+    --mount=type=secret,id=SUPABASE_KEY \
+    --mount=type=secret,id=SUPERJOB_KEY \
+    export NUXT_SUPABASE_URL=$(cat /run/secrets/SUPABASE_URL) && \
+    export NUXT_SUPABASE_KEY=$(cat /run/secrets/SUPABASE_KEY) && \
+    export NUXT_SUPERJOB_KEY=$(cat /run/secrets/SUPERJOB_KEY) && \
+    echo NUXT_SUPABASE_URL=$(cat /run/secrets/SUPABASE_URL) >> .env && \
+    echo NUXT_SUPABASE_KEY=$(cat /run/secrets/SUPABASE_KEY) >> .env && \
+    echo SUPABASE_URL=$(cat /run/secrets/SUPABASE_URL) >> .env && \
+    echo SUPABASE_KEY=$(cat /run/secrets/SUPABASE_KEY) >> .env && \
+    echo NUXT_SUPERJOB_KEY=$(cat /run/secrets/SUPERJOB_KEY) >> .env && \
     cat .env && \
     npm ci && \
-    cat /run/secrets/supabase_url && \
+    cat /run/secrets/SUPABASE_URL && \
     npm run build
 
 FROM node:20.11.1-alpine
