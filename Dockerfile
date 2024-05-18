@@ -9,7 +9,7 @@ RUN --mount=type=secret,id=SUPABASE_URL \
     --mount=type=secret,id=SUPERJOB_KEY \
     SUPABASE_URL=$(cat /run/secrets/SUPABASE_URL) \
     SUPABASE_KEY=$(cat /run/secrets/SUPABASE_KEY) \
-    SUPERJOB_KEY=$(cat /run/secrets/SUPERJOB_KEY )\
+    SUPERJOB_KEY=$(cat /run/secrets/SUPERJOB_KEY) \
     npm ci && \
     npm run build
 
