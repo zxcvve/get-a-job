@@ -2,6 +2,9 @@
 const route = useRoute();
 
 const vacancy = await $fetch(`/api/supabase/${route.params.id}`);
+if (!vacancy) {
+  await navigateTo("/");
+}
 </script>
 
 <template>
