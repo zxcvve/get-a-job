@@ -17,11 +17,6 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_KEY:${{secrets.SUPABASE_KEY}}
-      SUPABASE_URL:${{secrets.SUPABASE_URL}}
-      SUPERJOB_ID:${{secrets.SUPERJOB_ID}}
-      SUPERJOB_KEY:${{secrets.SUPERJOB_KEY}}
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -39,10 +34,10 @@ jobs:
           push: true
           tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
           secret-envs: |
-            id=SUPABASE_KEY
-            id=SUPABASE_URL
-            id=SUPERJOB_ID
-            id=SUPERJOB_KEY 
+            id=SUPABASE_KEY,env=${{ secrets.SUPABASE_KEY }}
+            id=SUPABASE_URL,env=${{ secrets.SUPABASE_URL }}
+            id=SUPERJOB_ID,env=${{ secrets.SUPERJOB_ID }}
+            id=SUPERJOB_KEY,env=${{ secrets.SUPERJOB_KEY }}
 
   deploy:
     needs: docker
