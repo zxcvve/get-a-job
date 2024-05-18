@@ -4,16 +4,13 @@ WORKDIR /app
 
 COPY . /app
 
-ARG SUPABASE_URL
-ENV SUPABASE_URL $SUPABASE_URL
-
-ARG SUPABASE_KEY
-ENV SUPABASE_KEY $SUPABASE_KEY
-
-ARG SUPERJOB_KEY
-ENV SUPERJOB_KEY $SUPERJOB_KEY
-
-RUN npm ci && \
+RUN --mount=type=secret,id=SUPABASE_URL \
+    --mount=type=secret,id=SUPABASE_KEY \
+    --mount=type=secret,id=SUPERJOB_KEY \
+    SUPABASE_URL=$(cat /run/secrets/SUPABASE_URL) \
+    SUPABASE_KEY=$(cat /run/secrets/SUPABASE_KEY) \
+    SUPERJOB_KEY=$(cat /run/secrets/SUPERJOB_KEY )\
+    npm ci && \
     npm run build
 
 FROM node:20.11.1-alpine
