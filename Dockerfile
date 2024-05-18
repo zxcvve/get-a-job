@@ -12,7 +12,10 @@ RUN --mount=type=secret,id=supabase_url \
     export NUXT_SUPERJOB_KEY=$(cat /run/secrets/superjob_key) && \
     echo NUXT_SUPABASE_URL=$(cat /run/secrets/supabase_url) >> .env && \
     echo NUXT_SUPABASE_KEY=$(cat /run/secrets/supabase_key) >> .env && \
+    echo SUPABASE_URL=$(cat /run/secrets/supabase_url) >> .env && \
+    echo SUPABASE_KEY=$(cat /run/secrets/supabase_key) >> .env && \
     echo NUXT_SUPERJOB_KEY=$(cat /run/secrets/superjob_key) >> .env && \
+    cat .env && \
     npm ci && \
     npm run build
 
