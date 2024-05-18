@@ -16,6 +16,16 @@ if (vacancy.value.salary.to) {
 if (vacancy.value.salary.currency === "RUR") {
   salaryString += ` ₽`;
 }
+
+let vacancyDescription = "";
+if (vacancy.value.service === 1) {
+  const parts = vacancy.value.url.split("/");
+  const hhId = parts[parts.length - 1];
+  const { data: hhResponse } = await useFetch(
+    `https://api.hh.ru/vacancies/${hhId}`,
+  );
+  vacancyDescription += hhResponse.value.description;
+}
 </script>
 
 <template>
@@ -28,7 +38,8 @@ if (vacancy.value.salary.currency === "RUR") {
           </template>
           Расписание: {{ vacancy.schedule.name }}<br />Опыт работы:
           {{ vacancy.experience.name }}<br />
-          Тип занятости: {{ vacancy.employment.name }}
+          Тип занятости: {{ vacancy.employment.name }} <br /><br />
+          <div v-html="vacancyDescription"></div>
           <template #footer>
             <p class="font-bold">{{ salaryString }}</p>
           </template>
