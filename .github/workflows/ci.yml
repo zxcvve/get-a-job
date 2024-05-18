@@ -32,12 +32,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+          tags: "${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}"
           secrets: |
             "supabase_key=${{ secrets.SUPABASE_KEY }}"
-            "supabase_url=${{ secrets.SUPABASE_URL }}"
-            "superjob_id=${{ secrets.SUPERJOB_ID }}"
-            "superjob_key=${{ secrets.SUPERJOB_KEY }}"
 
   deploy:
     needs: docker
