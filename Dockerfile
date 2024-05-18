@@ -17,6 +17,7 @@ RUN --mount=type=secret,id=supabase_url \
     echo NUXT_SUPERJOB_KEY=$(cat /run/secrets/superjob_key) >> .env && \
     cat .env && \
     npm ci && \
+    cat /run/secrets/supabase_url && \
     npm run build
 
 FROM node:20.11.1-alpine
