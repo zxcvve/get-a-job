@@ -38,7 +38,6 @@ if (vacancy.value.service === 1) {
           </template>
           Расписание: {{ vacancy.schedule.name }}<br />Опыт работы:
           {{ vacancy.experience.name }}<br />
-          Тип занятости: {{ vacancy.employment.name }} <br /><br />
           <div v-html="vacancyDescription"></div>
           <template #footer>
             <p class="font-bold">{{ salaryString }}</p>
