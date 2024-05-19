@@ -29,7 +29,7 @@ if (vacancy.value.service === 1) {
   const { data: hhResponse } = await useFetch(
     `https://api.hh.ru/vacancies/${hhId}`,
   );
-  vacancyDescription += hhResponse.value.description;
+  vacancyDescription += hhResponse?.value?.description;
 }
 </script>
 
