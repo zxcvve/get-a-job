@@ -57,7 +57,7 @@ const resetClicked = () => {
 
     <NRadioGroup v-model:value="selectedVacancyFilter.selectedSchedule">
       <NSpace vertical>
-        <p class="font-bold">Уровень дохода</p>
+        <p class="font-bold">Тип занятости</p>
         <NRadio
           v-for="item in scheduleOptions"
           :key="item.id"
