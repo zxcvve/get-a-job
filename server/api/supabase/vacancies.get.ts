@@ -9,8 +9,7 @@ function getTotalPages(count: number | null) {
 
 type VacancyFilters = {
   salaryFrom?: number;
-  isRemote?: boolean;
-  isFlexible?: boolean;
+  schedule: string;
 };
 
 async function fetchSupabaseVacancies(
@@ -30,7 +29,8 @@ async function fetchSupabaseVacancies(
         employer,
         service,
         salary,
-        minimal_salary: salary->from
+        minimal_salary: salary->from,
+        work_schedule: schedule->id
       `,
     { head: false, count: "exact" },
   );
@@ -41,7 +41,12 @@ async function fetchSupabaseVacancies(
   ) {
     query = query.gte("salary->from", vacancyFilters.salaryFrom);
   }
+
+  if (vacancyFilters.schedule) {
+    query = query.eq("schedule->id", `"${vacancyFilters.schedule}"`);
+  }
   query = query.range(lowerRange, upperRange);
+  console.log(query);
   const { data, count } = await query;
   const totalPages = getTotalPages(count);
   return {
@@ -54,11 +59,12 @@ export default eventHandler(async (event) => {
   type queryValue = {
     page: number;
     salaryFrom: number;
+    schedule: string;
   };
-  // TODO: implement schedule filtering
   const query: queryValue = getQuery(event);
   const vacancyFilters: VacancyFilters = {
     salaryFrom: Number(query.salaryFrom),
+    schedule: query.schedule,
   };
   return fetchSupabaseVacancies(event, query.page, vacancyFilters);
 });

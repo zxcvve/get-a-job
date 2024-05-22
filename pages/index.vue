@@ -26,7 +26,7 @@ watch([selectedVacancyFilter.value], async () => {
 
 watch([page, selectedVacancyFilter.value], async () => {
   vacancies.value = await $fetch(
-    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}`,
+    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}&schedule=${selectedVacancyFilter.value.selectedSchedule}`,
   );
 });
 
@@ -34,7 +34,7 @@ const resetVacancies = async (filter) => {
   if (filter.value.selectedSalary !== undefined) {
     page.value = 1;
     selectedVacancyFilter.value.selectedSalary = 0;
-    selectedVacancyFilter.value.selectedSchedule = [];
+    selectedVacancyFilter.value.selectedSchedule = "";
   }
 };
 </script>

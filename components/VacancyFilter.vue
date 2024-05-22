@@ -31,7 +31,7 @@ const scheduleOptions = [
 const selectedVacancyFilter = defineModel({
   default: {
     selectedSalary: 0,
-    selectedSchedule: [],
+    selectedSchedule: "",
   },
 });
 
@@ -54,17 +54,18 @@ const resetClicked = () => {
         ></NRadio>
       </NSpace>
     </NRadioGroup>
-    <NCheckboxGroup v-model:value="selectedVacancyFilter.selectedSchedule">
+
+    <NRadioGroup v-model:value="selectedVacancyFilter.selectedSchedule">
       <NSpace vertical>
-        <p class="font-bold">Тип занятости</p>
-        <NCheckbox
+        <p class="font-bold">Уровень дохода</p>
+        <NRadio
           v-for="item in scheduleOptions"
           :key="item.id"
           :value="item.id"
           :label="item.name"
-        ></NCheckbox>
+        ></NRadio>
       </NSpace>
-    </NCheckboxGroup>
+    </NRadioGroup>
     <NSpace>
       <NButton type="default" @click="resetClicked">Сброс</NButton>
     </NSpace>
