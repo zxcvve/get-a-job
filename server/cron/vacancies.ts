@@ -57,7 +57,7 @@ async function collectSuperJobVacancies() {
         vacancyExperience.name = "От 1 года до 3 лет";
         break;
       case 3:
-        vacancyExperience.id = "between1And6";
+        vacancyExperience.id = "between3And6";
         vacancyExperience.name = "От 3 до 6 лет";
         break;
       case 4:

@@ -8,6 +8,13 @@ import {
   NSpace,
 } from "naive-ui";
 
+const experience = [
+  { id: "noExperience", name: "Нет опыта" },
+  { id: "between1And3", name: "От 1 года до 3 лет" },
+  { id: "between3And6", name: "От 3 до 6 лет" },
+  { id: "moreThan6", name: "Более 6 лет" },
+];
+
 const salaryOptions = [
   { title: "От 10000", value: 10000 },
   { title: "От 20000", value: 20000 },
@@ -32,6 +39,7 @@ const selectedVacancyFilter = defineModel({
   default: {
     selectedSalary: 0,
     selectedSchedule: "",
+    selectedExperience: "",
   },
 });
 
@@ -60,6 +68,18 @@ const resetClicked = () => {
         <p class="font-bold">Тип занятости</p>
         <NRadio
           v-for="item in scheduleOptions"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        ></NRadio>
+      </NSpace>
+    </NRadioGroup>
+
+    <NRadioGroup v-model:value="selectedVacancyFilter.selectedExperience">
+      <NSpace vertical>
+        <p class="font-bold">Опыт работы</p>
+        <NRadio
+          v-for="item in experience"
           :key="item.id"
           :value="item.id"
           :label="item.name"

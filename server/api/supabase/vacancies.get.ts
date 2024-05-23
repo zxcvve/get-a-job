@@ -10,6 +10,7 @@ function getTotalPages(count: number | null) {
 type VacancyFilters = {
   salaryFrom?: number;
   schedule: string;
+  experience: string;
 };
 
 async function fetchSupabaseVacancies(
@@ -45,8 +46,12 @@ async function fetchSupabaseVacancies(
   if (vacancyFilters.schedule) {
     query = query.eq("schedule->id", `"${vacancyFilters.schedule}"`);
   }
+
+  if (vacancyFilters.experience) {
+    query = query.eq("experience->id", `"${vacancyFilters.experience}"`);
+  }
+
   query = query.range(lowerRange, upperRange);
-  console.log(query);
   const { data, count } = await query;
   const totalPages = getTotalPages(count);
   return {
@@ -60,11 +65,13 @@ export default eventHandler(async (event) => {
     page: number;
     salaryFrom: number;
     schedule: string;
+    experience: string;
   };
   const query: queryValue = getQuery(event);
   const vacancyFilters: VacancyFilters = {
     salaryFrom: Number(query.salaryFrom),
     schedule: query.schedule,
+    experience: query.experience,
   };
   return fetchSupabaseVacancies(event, query.page, vacancyFilters);
 });

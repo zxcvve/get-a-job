@@ -26,7 +26,7 @@ watch([selectedVacancyFilter.value], async () => {
 
 watch([page, selectedVacancyFilter.value], async () => {
   vacancies.value = await $fetch(
-    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}&schedule=${selectedVacancyFilter.value.selectedSchedule}`,
+    `/api/supabase/vacancies?page=${page.value}&salaryFrom=${selectedVacancyFilter.value.selectedSalary}&schedule=${selectedVacancyFilter.value.selectedSchedule}&experience=${selectedVacancyFilter.value.selectedExperience}`,
   );
 });
 
@@ -35,6 +35,7 @@ const resetVacancies = async (filter) => {
     page.value = 1;
     selectedVacancyFilter.value.selectedSalary = 0;
     selectedVacancyFilter.value.selectedSchedule = "";
+    selectedVacancyFilter.value.selectedExperience = "";
   }
 };
 </script>
@@ -55,7 +56,7 @@ const resetVacancies = async (filter) => {
           >
             <VacancyCard
               :vacancy="vacancy"
-              v-bind:data-testid="'vacancy-card-' + index"
+              :data-testid="'vacancy-card-' + index"
             />
           </div>
           <NPagination v-model:page="page" :page-count="vacancies.pages" />
