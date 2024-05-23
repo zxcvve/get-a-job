@@ -6,6 +6,8 @@ on:
     branches: [ main, master ]
 jobs:
   test:
+    environment: get-a-job
+
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
