@@ -20,7 +20,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: NUXT_SUPABASE_URL={{secrets.SUPABASE_URL}} NUXT_SUPABASE_KEY={{secrets.SUPABASE_KEY}} npx playwright test
+      run: NUXT_SUPABASE_URL="{{secrets.SUPABASE_URL}}" NUXT_SUPABASE_KEY="{{secrets.SUPABASE_KEY}}" npx playwright test
       env:
         CI: true
 #        NUXT_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
