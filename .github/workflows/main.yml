@@ -60,7 +60,7 @@ jobs:
 
   test:
     environment: get-a-job
-
+    needs: deploy
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
