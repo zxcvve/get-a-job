@@ -48,8 +48,15 @@ const resetVacancies = async (filter) => {
             v-model="selectedVacancyFilter"
             @reset-clicked="resetVacancies"
           />
-          <div v-for="vacancy in vacancies.data" :key="vacancy.id" class="my-1">
-            <VacancyCard :vacancy="vacancy" />
+          <div
+            v-for="(vacancy, index) in vacancies.data"
+            :key="vacancy.id"
+            class="my-1"
+          >
+            <VacancyCard
+              :vacancy="vacancy"
+              v-bind:data-testid="'vacancy-card-' + index"
+            />
           </div>
           <NPagination v-model:page="page" :page-count="vacancies.pages" />
         </NFlex>
