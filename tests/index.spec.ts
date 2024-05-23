@@ -4,7 +4,7 @@ const base_url = process.env.BASE_URL || "http://localhost:3000";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(3000);
 });
 
 test("clicking vacancy card opens corresponding vacancy page", async ({
