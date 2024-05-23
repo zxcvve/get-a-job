@@ -50,7 +50,7 @@ const resetClicked = () => {
 };
 </script>
 <template>
-  <NSpace vertical>
+  <NSpace>
     <NRadioGroup v-model:value="selectedVacancyFilter.selectedSalary">
       <NSpace vertical>
         <p class="font-bold">Уровень дохода</p>
