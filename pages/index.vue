@@ -11,7 +11,8 @@ const vacancies = useState("vacancies");
 
 const selectedVacancyFilter = ref({
   selectedSalary: 0,
-  selectedSchedule: [],
+  selectedSchedule: "",
+  selectedExperience: "",
 });
 
 await callOnce(async () => {
